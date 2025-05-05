@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useDashboardData } from '../../context/DashboardProvider.jsx';
+import { useProfile } from '../../context/ProfileProvider.jsx';
 import { useNotifications } from '../../context/NotificationProvider.jsx';
 import API from '../../services/apiService.js';
 
@@ -17,7 +17,7 @@ import btnStyles from '../../components/Button/Button.module.css'
 import pageStyles from './PostPage.module.css'
 
 function PostPage(props) {
-    const { posts, setPosts, setSummary } = useDashboardData();
+    const { posts, setPosts, setSummary } = useProfile();
     const { handleApiCall } = useNotifications();
     const { CurrentDialog, openDialog,  closeDialog } = useDialogManager({
         'newPostDialog': NewPostDialog,

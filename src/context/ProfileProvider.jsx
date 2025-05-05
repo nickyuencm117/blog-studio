@@ -1,20 +1,15 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import API from '../services/apiService.js';
 
-const DashboardContext = createContext();
+const ProfileContext = createContext();
 
-function DashboardProvider({ children }) {
+function ProfileProvider({ children }) {
     const [summary, setSummary] = useState();
     const [posts, setPosts] = useState();
     const [comments, setComments] = useState();
     const [loading, setLoading] = useState(true);
 
-    const fetchDashboardData = useCallback(async () => {
-        setLoading(true);
-        // Use setTimeout to ensure the loading state renders before API call
-        // This breaks up the state updates across different render cycles
-        await new Promise(resolve => setTimeout(resolve, 0));
-
+    const fetchProfile = useCallback(async () => {
         const json = await API.getProfile();
         if (!json.success) {
             return handleSetNotifications(json.errors.map((error) => (
@@ -61,27 +56,26 @@ function DashboardProvider({ children }) {
     }, []);
 
     useEffect(() => {
-        fetchDashboardData();
+        fetchProfile();
     }, []);
 
     return (
-        <DashboardContext.Provider value={{ 
+        <ProfileContext.Provider value={{ 
             summary, 
             setSummary,
             posts,
             setPosts, 
             comments, 
             setComments,
-            loading, 
-            reFetch: fetchDashboardData
+            loading
         }}>
             {children}
-        </DashboardContext.Provider>
+        </ProfileContext.Provider>
     );
 };
 
-function useDashboardData() {
-    return useContext(DashboardContext);
+function useProfile() {
+    return useContext(ProfileContext);
 };
 
-export { DashboardProvider as default, useDashboardData };
+export { ProfileProvider as default, useProfile };

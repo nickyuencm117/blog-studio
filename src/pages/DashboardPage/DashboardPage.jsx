@@ -1,9 +1,9 @@
 import StatCard from '../../components/StatCard/StatCard.jsx';
-import { useDashboardData } from '../../context/DashboardProvider.jsx';
+import { useProfile } from '../../context/ProfileProvider.jsx';
 import pageStyle from './DashboardPage.module.css';
 
 function DashboardPage(props) {
-    const { summary, loading } = useDashboardData();
+    const { summary, loading } = useProfile();
 
     return (
         !loading && <main className='dashboard-page'>

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { useDashboardData } from '../../context/DashboardProvider';
+import { useProfile } from '../../context/ProfileProvider';
 import { useNotifications } from '../../context/NotificationProvider.jsx';
 import API from '../../services/apiService.js';
 
@@ -13,7 +13,7 @@ import DeleteDialog from '../../components/DeleteDialog/DeleteDialog.jsx';
 import btnStyles from '../../components/Button/Button.module.css';
 
 function CommentPage(props) {
-    const { comments, setComments, setSummary,  } = useDashboardData();
+    const { comments, setComments, setSummary,  } = useProfile();
     const { handleApiCall } = useNotifications();
     const { CurrentDialog, openDialog, closeDialog } = useDialogManager({
         'deleteDialog': DeleteDialog

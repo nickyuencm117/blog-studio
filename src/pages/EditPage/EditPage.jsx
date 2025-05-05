@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom';
 import API from '../../services/apiService.js';
 import Editor from '../../components/Editor/Editor.jsx';
 import { useNotifications } from '../../context/NotificationProvider.jsx';
-import { useDashboardData } from '../../context/DashboardProvider.jsx';
+import { useProfile } from '../../context/ProfileProvider.jsx';
 
 function EditPage() {
     const { handleApiCall } = useNotifications();
-    const { setPosts } = useDashboardData();
+    const { setPosts } = useProfile();
     const [editor, setEditor] = useState();
     const { postId } = useParams();
     
