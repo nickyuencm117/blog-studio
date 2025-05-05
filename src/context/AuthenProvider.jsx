@@ -12,13 +12,6 @@ function AuthenProvider({ children }) {
     const { handleApiCall, setNotifications } = useNotifications();
     const navigate = useNavigate();
 
-    const login = async () => {
-        const response = await API.login({username: 'benwong123', password: 'benwong123'});
-        setUser(response.username)
-        setIsAuthenticated(true);
-        return;
-    };
-   
     const verifyToken = async () => {
         console.log('verifying')
         await handleApiCall(() => API.verify(), {
@@ -63,23 +56,25 @@ function AuthenProvider({ children }) {
         });
     };
 
+    // Initial check on page load
     useEffect(() => {
-        if (!initialized) {
-            login();
-        }
+        verifyToken();
+    }, []);
+
+
+    useEffect(() => {
+        let timerId;
 
         if (isAuthenticated) {
-            verifyToken();
+            //Run every 5 minutes
+            timerId = setInterval(() => verifyToken, 1000 * 60 * 5); 
         };
         
-        const intervalTimerId = setInterval(() => {
-            if (isAuthenticated) {
-                verifyToken();
+        return () => {
+            if (timerId) {
+                clearInterval(timerId);
             };
-
-        }, 1000 * 10);
-
-        return () => clearInterval(intervalTimerId);
+        };
     }, [isAuthenticated]);
 
     return (
@@ -87,7 +82,9 @@ function AuthenProvider({ children }) {
             user, 
             setUser, 
             handleLogout,
-            initialized
+            initialized,
+            isAuthenticated,
+            setIsAuthenticated
         }}>
             { children }
         </AuthenContext.Provider>
