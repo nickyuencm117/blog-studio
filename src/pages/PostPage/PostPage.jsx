@@ -17,7 +17,7 @@ import btnStyles from '../../components/Button/Button.module.css'
 import pageStyles from './PostPage.module.css'
 
 function PostPage(props) {
-    const { posts, setPosts, setSummary } = useProfile();
+    const { posts, setPosts, setSummary, loading } = useProfile();
     const { handleApiCall } = useNotifications();
     const { CurrentDialog, openDialog,  closeDialog } = useDialogManager({
         'newPostDialog': NewPostDialog,
@@ -38,7 +38,7 @@ function PostPage(props) {
             }));
         };
         
-        await handleApiCall(() => API.createPost({ title }), {
+        await handleApiCall(() => API.createPost(title), {
             successMessage: 'Post created',
             onSuccess: updateProfile
         });
@@ -61,7 +61,7 @@ function PostPage(props) {
             }));
         };
 
-        handleApiCall(async () => await API.deletePost(postToDelete.id), { 
+        handleApiCall(() => API.deletePost(postToDelete.id), { 
             successMessage:'Post deleted',
             onSuccess: updateProfile
         });
@@ -70,53 +70,62 @@ function PostPage(props) {
     }, [])
 
     return (
-        <>  
+        loading ? (
+            <div>Loading ...</div>
+        ) : (
+            <>  
             {CurrentDialog && <CurrentDialog/>}
-            <main className='post-page'>               
-                <header className={`${pageStyles.header} mb4`}>
-                    <h2 className='font-md'>Posts</h2>         
-                    <button 
-                        className={`${btnStyles.primary} font-xs`} 
-                        onClick={() => openDialog('newPostDialog', { onSubmit: handleSubmit })}
-                    >
-                            <span className='font-lg'>+</span> Create New Post
-                    </button> 
-                </header>
-                <div className='posts-wrapper'>
-                    {posts.map((post) => (
-                        <RecordCard
-                            key={post.id}
-                            title={post.title}
-                            author={post.author.username}
-                            text={post.summary}
-                            createdAt={new Date(post.createdAt).toLocaleDateString('en-US', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                            })}
-                            like={post.like}
-                            dislike={post.dislike}
-                            renderAction={() => (
-                                <div className='action-container'>
-                                    <button 
-                                        className={btnStyles.transparent}
-                                        style={{marginRight: 'var(--spacing4)'}}
-                                    >   
-                                        <Link to={`/posts/${post.id}`}><EditIcon className='svg-icon'/></Link>
-                                    </button>
-                                    <button 
-                                        className={btnStyles.transparent}
-                                        onClick={() => openDialog('deleteDialog', { onConfirm: () => handleDelete(post) })}
-                                    >
-                                        <DeleteIcon className='svg-icon'/>
-                                    </button>
-                                </div>
-                            )}
-                        />
-                    ))}
-                </div> 
-            </main>
-        </>
+                <main className='post-page'>               
+                    <header className={`${pageStyles.header} mb4`}>
+                        <h2 className='font-md'>Posts</h2>         
+                        <button 
+                            className={`${btnStyles.primary} font-xs`} 
+                            onClick={() => openDialog('newPostDialog', { onSubmit: handleSubmit })}
+                        >
+                                <span className='font-lg'>+</span> Create New Post
+                        </button> 
+                    </header>
+
+                    <div>
+                        {(!posts || posts.length <= 0 ) ? (
+                            <div>No Post Yet!!</div>
+                        ) : (
+                            posts.map((post) => (
+                                <RecordCard
+                                    key={post.id}
+                                    title={post.title}
+                                    author={post.author.username}
+                                    text={post.summary}
+                                    createdAt={new Date(post.createdAt).toLocaleDateString('en-US', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric'
+                                    })}
+                                    like={post.like}
+                                    dislike={post.dislike}
+                                    renderAction={() => (
+                                        <div className='action-container'>
+                                            <button 
+                                                className={btnStyles.transparent}
+                                                style={{marginRight: 'var(--spacing4)'}}
+                                            >   
+                                                <Link to={`/posts/${post.id}`}><EditIcon className='svg-icon'/></Link>
+                                            </button>
+                                            <button 
+                                                className={btnStyles.transparent}
+                                                onClick={() => openDialog('deleteDialog', { onConfirm: () => handleDelete(post) })}
+                                            >
+                                                <DeleteIcon className='svg-icon'/>
+                                            </button>
+                                        </div>
+                                    )}
+                                />
+                            ))
+                        )}
+                    </div> 
+                </main>
+            </>
+        )
     );
 };
 

@@ -8,21 +8,16 @@ import { useProfile } from '../../context/ProfileProvider.jsx';
 function EditPage() {
     const { handleApiCall } = useNotifications();
     const { setPosts } = useProfile();
-    const [editor, setEditor] = useState();
+    const [loading, setLoading] = useState(true);
+    const [editContent, setEditContent] = useState();
     const { postId } = useParams();
     
-
     useEffect(() => {
-        handleApiCall(async () => await API.getPost(postId), { 
+        handleApiCall(() => API.getPost(postId), { 
             notifySuccess: false, 
-            onSuccess: (result) => { 
-                setEditor(
-                    <Editor 
-                        title={result.post.title}
-                        content={result.post.content}
-                        onSave={handleUpdatePost}
-                    />
-                )
+            onSuccess: (response) => {
+                setEditContent(response);
+                setLoading(false);
             }
         });
 
@@ -30,7 +25,7 @@ function EditPage() {
     }, [])
 
     function handleUpdatePost(title, content) {
-        handleApiCall(async () => await API.updatePost(postId, {title, content}), { 
+        handleApiCall(() => API.updatePost(postId, title, content), { 
             successMessage: 'Updated sucessfully', 
             errorMessage: 'Updated unsucessfully',
             onSuccess: (result) => { 
@@ -44,12 +39,19 @@ function EditPage() {
     };
 
     return (
-        <main className='edit-page'>
+        loading ? (
+            <div>loading</div>
+        ) : (
+            <main className='edit-page'>
             <h2 className='font-md mb5'>Edit</h2>
-            {editor ? (editor) : (<div>loading</div>)}
-        </main>
-    )
-    ;
+                <Editor 
+                    title={editContent.post.title}
+                    content={editContent.post.content}
+                    onSave={handleUpdatePost}
+                />
+            </main>
+        )
+    );
 };
 
 export default EditPage;
