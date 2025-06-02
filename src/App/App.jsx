@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import AppProvider from '../context/AppProvider';
 import NotificationDisplayer from '../NotificationDisplayer.jsx';
 import { useAuthen } from '../context/AuthenProvider.jsx';

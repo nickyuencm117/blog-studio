@@ -1,9 +1,9 @@
 class ApiError extends Error {
-    constructor({ message, name, statusCode, timeStamp, details=null }) {
+    constructor({ message, name, statusCode, timestamp, details=null }) {
         super(message);
         this.name = name;
         this.statusCode = statusCode;
-        this.timeStamp = timeStamp;
+        this.timestamp = timestamp;
         this.details = details;
     };
 };
@@ -47,12 +47,16 @@ function createAPIService() {
     return {
         logout: () => request('/authen/logout', 'POST', null, true),
         verify: () =>request('/authen/verify', 'GET', null, true),
-        getProfile: () => request('/profiles', 'GET', null, true),
-        getPosts: (url) => request(url, 'GET', null, true),
+        getSummary: () => request('/profiles/summary', 'GET', null, true),
+        getComments: (searchParams) => 
+            request(`/profiles/comments${searchParams ? `?${searchParams.toString()}` : ''}`, 'GET', null, true),
+        getPostsMetaData: (searchParams) => 
+            request(`/profiles/posts${searchParams ? `?${searchParams.toString()}` : ''}`, 'GET', null, true),
         createPost: (title) => request('/posts', 'POST', { title }, true),
         deletePost: (postId) => request(`/posts/${postId}`, 'DELETE', null, true),
         getPost: (postId) => request(`/posts/${postId}`, 'GET', null, true),
-        updatePost: (postId, title, content) => request(`/posts/${postId}`, 'PATCH', { title, content }, true),
+        updatePost: (postId, { title, content, summary, status }) => 
+            request(`/posts/${postId}`, 'PATCH', { title, content, summary, status }, true),
         deleteComment: (commentId) => request(`/comments/${commentId}`, 'DELETE', null, true),
     };
 };
