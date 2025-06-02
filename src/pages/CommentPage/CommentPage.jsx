@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import useComments from '../../hook/useComments.jsx';
 
 import RecordCard from '../../components/RecordCard/RecordCard.jsx';
-import DeleteIcon from '../../icons/DeleteIcon.jsx';
+import { DeleteIcon } from '../../icons';
 import Filter from '../../components/Filter/Filter.jsx';
 
 import useDialogManager from '../../hook/useDialogManager.jsx';
@@ -79,7 +79,7 @@ function CommentPage(props) {
                                                     className={btnStyles.transparent}
                                                     onClick={() => openDialog('deleteDialog', { onConfirm: () => handleDelete(comment)})}
                                                 >
-                                                    <DeleteIcon className='svg-icon'/>
+                                                    <DeleteIcon/>
                                                 </button>
                                             </div>  
                                         )}

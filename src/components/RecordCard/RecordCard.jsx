@@ -1,6 +1,5 @@
 import Card from '../Card/Card.jsx';
-import LikeIcon from '../../icons/LikeIcon.jsx';
-import DislikeIcon from '../../icons/DislikeIcon.jsx';
+import { LikeIcon, DislikeIcon } from '../../icons';
 import styles from './RecordCard.module.css';
 
 function RecordCard({ title, author, text, createdAt, like, dislike, renderAction }) {
@@ -24,11 +23,11 @@ function RecordCard({ title, author, text, createdAt, like, dislike, renderActio
                         <span>{`created at ${createdAt}`}</span>
                     </li>
                     <li className={`${styles.like} font-xxs`}>
-                        <LikeIcon className={styles.icon}/>
+                        <LikeIcon size={23}/>
                         <span>{like}</span>
                     </li>
                     <li className={`${styles.dislike} font-xxs`}>
-                        <DislikeIcon className={styles.icon}/>
+                        <DislikeIcon size={23}/>
                         <span>{dislike}</span>
                     </li>
                 </ul>

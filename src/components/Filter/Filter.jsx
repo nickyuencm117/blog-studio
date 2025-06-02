@@ -49,7 +49,6 @@ function Filter({ filters, useStatus=true, onFilterChange }) {
                     <select 
                         name='status' 
                         value={filters.status}
-                        defaultValue='all'
                         className='font-xs'
                         onChange={(e) => handleStatusChange(e.target.value)}
                     >

@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
-import DashboardIcon from '../../icons/DashboardIcon.jsx';
-import PostIcon from '../../icons/PostIcon.jsx';
-import CommentIcon from '../../icons/CommentIcon.jsx';
+import { DashboardIcon, PostIcon, CommentIcon } from '../../icons';
 import styles from './SideBar.module.css';
 
 function SideBar({ className, collasped }) {
@@ -11,7 +9,7 @@ function SideBar({ className, collasped }) {
                 <ul>
                     <li className={styles.item}>
                         <Link to='/' className={styles.link}>
-                            <DashboardIcon className='svg-icon'/>
+                            <DashboardIcon/>
                             <div className={`font-xs ${collasped ? styles.collasped : styles.show}`}>
                                 <span>Dashboard</span>
                             </div>
@@ -20,7 +18,7 @@ function SideBar({ className, collasped }) {
 
                     <li className={styles.item}>
                         <Link to='/posts' className={styles.link}>
-                            <PostIcon className='svg-icon'/>
+                            <PostIcon/>
                             <div className={`font-xs ${collasped ? styles.collasped :styles.show}`}>
                                 <span>Posts</span>
                             </div>
@@ -29,7 +27,7 @@ function SideBar({ className, collasped }) {
 
                     <li className={styles.item}>
                         <Link to='/comments' className={styles.link}>    
-                            <CommentIcon className='svg-icon'/>
+                            <CommentIcon/>
                             <div className={`font-xs ${collasped ? styles.collasped: styles.show}`}>
                                 <span>Comments</span>
                             </div>

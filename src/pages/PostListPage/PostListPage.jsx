@@ -5,8 +5,7 @@ import usePostsMetaData from '../../hook/usePostsMetaData.jsx';
 
 import RecordCard from '../../components/RecordCard/RecordCard.jsx';
 import Filter from '../../components/Filter/Filter.jsx';
-import EditIcon from '../../icons/EditIcon.jsx';
-import DeleteIcon from '../../icons/DeleteIcon.jsx'
+import { EditIcon, DeleteIcon } from '../../icons';
 
 import useDialogManager from '../../hook/useDialogManager.jsx';
 import NewPostDialog from '../../components/NewPostDialog/NewPostDialog.jsx';
@@ -97,13 +96,13 @@ function PostListPage(props) {
                                                         className={btnStyles.transparent}
                                                         style={{marginRight: 'var(--spacing4)'}}
                                                     >   
-                                                        <Link to={`/posts/${post.id}`}><EditIcon className='svg-icon'/></Link>
+                                                        <Link to={`/posts/${post.id}`}><EditIcon/></Link>
                                                     </button>
                                                     <button 
                                                         className={btnStyles.transparent}
                                                         onClick={() => openDialog('deleteDialog', { onConfirm: () => handleDelete(post) })}
                                                     >
-                                                        <DeleteIcon className='svg-icon'/>
+                                                        <DeleteIcon/>
                                                     </button>
                                                 </div>
                                             )}
