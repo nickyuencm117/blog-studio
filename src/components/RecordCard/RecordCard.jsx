@@ -5,12 +5,12 @@ import styles from './RecordCard.module.css';
 function RecordCard({ title, author, text, createdAt, like, dislike, renderAction }) {
     return (
         <Card className={styles.recordCard} role='region'>
-            <Card.Header className={styles.header}>
+            <Card.Header>
                 <div>
-                    <h3 className={`${styles.title} font-md mb2`}>{title}</h3>
+                    <h3 className='font-md mb2'>{title}</h3>
                     <p className='font-xxs mb3'>by {author}</p>
                     {text && (
-                        <p className={`${styles.text} font-xs`}>{text}</p>
+                        <p className='font-xs'>{text}</p>
                     )}
                 </div>
                 
@@ -22,11 +22,11 @@ function RecordCard({ title, author, text, createdAt, like, dislike, renderActio
                     <li className='created-at font-xxs'>
                         <span>{`created at ${createdAt}`}</span>
                     </li>
-                    <li className={`${styles.like} font-xxs`}>
+                    <li className='font-xxs'>
                         <LikeIcon size={23}/>
                         <span>{like}</span>
                     </li>
-                    <li className={`${styles.dislike} font-xxs`}>
+                    <li className='font-xxs'>
                         <DislikeIcon size={23}/>
                         <span>{dislike}</span>
                     </li>
