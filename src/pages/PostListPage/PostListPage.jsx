@@ -5,6 +5,7 @@ import usePostsMetaData from '../../hook/usePostsMetaData.jsx';
 
 import RecordCard from '../../components/RecordCard/RecordCard.jsx';
 import SearchToolBar from '../../components/SearchToolBar/SearchToolBar.jsx';
+import { UnexpectedError, NotFoundError } from '../../components/Error';
 import { EditIcon, DeleteIcon } from '../../icons';
 
 import useDialogManager from '../../hook/useDialogManager.jsx';
@@ -67,8 +68,8 @@ function PostListPage(props) {
             {CurrentDialog && <CurrentDialog/>}
             <main className={pageStyles.postListPage}>
                 {loading && <p className='font-sm'>Loading...</p>}
-                {!loading && error && <p className='font-sm'>Error occured when fetching ...</p>}
-                {!loading && posts && (
+                {!loading && error && !posts && <UnexpectedError/>}
+                {!loading && !error && posts && (
                     <>
                         <header className='mb4'>
                             <div>
@@ -128,7 +129,7 @@ function PostListPage(props) {
                                 </div> 
                             </>                     
                         ) : (
-                            <div>No Post Yet!!</div>
+                            <NotFoundError/>
                         )}                        
                     </>
                 )}               

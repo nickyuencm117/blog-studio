@@ -6,6 +6,7 @@ import useComments from '../../hook/useComments.jsx';
 import RecordCard from '../../components/RecordCard/RecordCard.jsx';
 import { DeleteIcon } from '../../icons';
 import SearchToolBar from '../../components/SearchToolBar/SearchToolBar.jsx';
+import { UnexpectedError, NotFoundError } from '../../components/Error';
 
 import useDialogManager from '../../hook/useDialogManager.jsx';
 import DeleteDialog from '../../components/DeleteDialog/DeleteDialog.jsx';
@@ -49,8 +50,8 @@ function CommentPage(props) {
             {CurrentDialog && <CurrentDialog/>}
             <main className={pageStyles.commentPage}>
                 {loading && <p className='font-sm'>Loading...</p>}
-                {!loading && error && <p className='font-sm'>Error occured when fetch posts...</p>}
-                {!loading && comments && (
+                {!loading && error && !comments && <UnexpectedError/>}
+                {!loading && !error && comments && (
                     <>  
                         <header className='mb4'>
                             <h2 className='font-md mb4'>Comments</h2>      
@@ -93,7 +94,7 @@ function CommentPage(props) {
                                 ))}
                             </div>                                
                         ) : (
-                            <div>No Comment Yet</div>
+                            <NotFoundError/>
                         )}                         
                     </>                  
                 )}
