@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import useComments from '../../hook/useComments.jsx';
 
-import RecordCard from '../../components/RecordCard/RecordCard.jsx';
+import { RecordCard, RecordCardSkeleton } from '../../components/RecordCard/';
 import { DeleteIcon } from '../../icons';
 import SearchToolBar from '../../components/SearchToolBar/SearchToolBar.jsx';
 import { UnexpectedError, NotFoundError } from '../../components/Error';
@@ -49,7 +49,11 @@ function CommentPage(props) {
         <>
             {CurrentDialog && <CurrentDialog/>}
             <main className={pageStyles.commentPage}>
-                {loading && <p className='font-sm'>Loading...</p>}
+                {loading && (
+                    Array(3).fill().map((_, index) => (
+                        <RecordCardSkeleton key={index} className='mb3'/>
+                    ))
+                )}
                 {!loading && error && !comments && <UnexpectedError/>}
                 {!loading && !error && comments && (
                     <>  
