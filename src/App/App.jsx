@@ -18,8 +18,8 @@ function AppContent(props) {
           isOpen={true}
           title='Notification'
           showCloseButton={false}
-          confirmBtn='Go back to DevBlog'
-          onConfirm={() => location.href='http://localhost:3002/login'}
+          confirmBtn='Go back to MyBlog'
+          onConfirm={() => location.href=import.meta.env.VITE_BLOG_APP_URL}
         >  
           <div className='font-sm' style={{marginBottom: 'var(--spacing4)'}}>
             <p>You are not logged in.</p>
