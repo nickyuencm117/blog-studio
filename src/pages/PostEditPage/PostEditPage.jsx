@@ -7,11 +7,11 @@ import styles from './PostEditPage.module.css';
 
 function PostEditPage() {
     const { postId } = useParams();
-    const { post, setPost, initialLoading, updateLoading, error, handlePostUpdate } = usePost(postId);
+    const { post, setPost, initialLoading, updateLoading, setUpdateLoading, error, handlePostUpdate } = usePost(postId);
     const editorRef = useRef();
 
 
-    function handleSave() {
+    async function handleSave() {
         const valueToUpdate = {
             title: post.title,
             content: editorRef.current.getContent(),
@@ -19,7 +19,13 @@ function PostEditPage() {
             status: post.status
         };
 
-        handlePostUpdate(valueToUpdate);
+        editorRef.current.setEditable(false);
+        setUpdateLoading(true);
+
+        await handlePostUpdate(valueToUpdate);
+
+        editorRef.current.setEditable(true);
+        setUpdateLoading(false);
     };
 
     if (!initialLoading && !updateLoading && error) {
@@ -34,8 +40,7 @@ function PostEditPage() {
     return (
         <main className={styles.editPage} >  
             {initialLoading && <p className='font-sm'>Loading...</p>}  
-            {updateLoading && <p className='font-sm'>Updating...</p>}
-            {!initialLoading && !updateLoading && post && (
+            {!initialLoading && !error && post && (
                 <>                  
                     <h2 className='font-md mb5'>Edit</h2>
 
@@ -45,6 +50,7 @@ function PostEditPage() {
                             className='font-sm' 
                             value={post.title}
                             onChange={(e) => setPost({...post, title: e.target.value })}
+                            disabled={updateLoading} 
                         />
                     </div>
 
@@ -54,6 +60,7 @@ function PostEditPage() {
                             className='font-sm' 
                             value={post.summary}
                             onChange={(e) => setPost({...post, summary: e.target.value })}
+                            disabled={updateLoading} 
                         />
                     </div>
 
@@ -74,13 +81,19 @@ function PostEditPage() {
                                 id='status' 
                                 value={post.status} 
                                 onChange={(e) => setPost({...post, status: e.target.value })}
+                                disabled={updateLoading} 
                             >
                                 <option value='drafted'>Drafted</option>
                                 <option value='published'>Published</option>
                                 <option value='archived'>Archived</option>
                             </select>
                         </div>  
-                        <button onClick={handleSave}>Save</button>
+                        <button 
+                            disabled={updateLoading} 
+                            onClick={handleSave}
+                        >
+                            Save
+                        </button>
                     </div>
                 </>
             )}

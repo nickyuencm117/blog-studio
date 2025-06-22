@@ -18,7 +18,15 @@
                 color: var(--color-base-content);   
                 background-color: var(--color-base-100);
                 border: solid var(--color-base-content) var(--border);
+                
+                &:disabled {
+                    filter: brightness(50%);
+                }
             }
         }
+    }
+
+    input:disabled {
+        filter: brightness(50%)
     }
 }
