@@ -1,11 +1,11 @@
-import styles from './StatCardSkeleton.module.css';
+import cardStyles from '../Card/Card.module.css';
 import { SkeletonBox, SkeletonText } from '../Skeleton';
 
 function StatCardSkeleton({ className }) {
     return (
-        <div className={`${styles.statCardSkeleton} ${className}`}>
-            <SkeletonText 
-                lines={2} 
+        <div className={`${cardStyles.card} ${className}`}>
+            <SkeletonText
+                lines={2}
                 width={200} 
                 height={20} 
                 gap={10} 

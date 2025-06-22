@@ -1,9 +1,9 @@
-import styles from './RecordCardSkeleton.module.css';
+import cardStyles from '../Card/Card.module.css';
 import { SkeletonBox, SkeletonText } from '../Skeleton';
 
 function RecordCardSkeleton({ className }) {
     return (
-        <div className={`${styles.recordCardSkeleton} ${className}`}>
+        <div className={`${cardStyles.card} ${className}`}>
             <SkeletonBox height={25} className='mb2'/>
             <SkeletonText 
                 lines={2} 
