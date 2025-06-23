@@ -55,8 +55,8 @@ function PostListPage(props) {
     }, [searchParams]);
 
     const handleSubmit = useCallback(async (title) => {
-        closeDialog();
         await addPost(title)
+        closeDialog();
     }, []);
 
     const handleDelete = useCallback(async (postToDelete) => {
