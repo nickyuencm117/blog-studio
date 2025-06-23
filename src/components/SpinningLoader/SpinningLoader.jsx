@@ -1,8 +1,14 @@
 import  styles from './SpinningLoader.module.css';
 
-function SpinningLoader() {
+function SpinningLoader({ className, size='large'}) {
+    const sizeClass = {
+        small: styles.small,
+        medium: styles.medium,
+        large: styles.large
+    }
+
     return (
-        <div className={styles.loader}></div>
+        <div className={`${className} ${styles.loader} ${sizeClass[size]}`}></div>
     );
 };
 
